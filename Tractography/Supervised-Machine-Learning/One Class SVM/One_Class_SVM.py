@@ -63,7 +63,7 @@ def load(filename):
     wholeTract= nib.streamlines.load(filename)  
     wholeTract = wholeTract.streamlines
     return  wholeTract    
-def resample(streamlines, no_of_points):
+def embedding(streamlines, no_of_points):
     """Resample streamlines using 12 points and also flatten the streamlines
     """
     return np.array([set_number_of_points(s, no_of_points).ravel() for s in streamlines]) 
@@ -78,7 +78,7 @@ def create_train_data_set(train_subjectList,tract):
         train_data=np.concatenate((train_data, wholeTract),axis=0) 
     
     print ("train data Shape") 
-    resample_tract=resample(train_data,no_of_points=no_of_points)
+    resample_tract=embedding(train_data,no_of_points=no_of_points)
    
     return resample_tract, train_data
     
@@ -87,7 +87,7 @@ def create_test_data_set(testTarget_brain):
     print ("Preparing Test Data")    
     t_filename=testTarget_brain #"124422_af.left.trk"    
     test_data=load(t_filename)  
-    resample_tractogram=resample(test_data,no_of_points=no_of_points)
+    resample_tractogram=embedding(test_data,no_of_points=no_of_points)
 
     return resample_tractogram, test_data  
       
@@ -190,16 +190,4 @@ if __name__ == '__main__':
     color_positive= colors.green
     color_negative=colors.red
     show_tract(segmented_tract_positive, color_positive, segmented_tract_negative, color_negative, out_path)#,color_negative)#,segmented_tract_negative) 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
